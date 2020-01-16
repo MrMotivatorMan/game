@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-app.config["DEBUG"] = True
+app.config["DEBUG"] = False
 Session(app)
 
 if app.config["DEBUG"]:
@@ -50,16 +50,7 @@ def play(row,col):
     session["winX"] = ["X","X","X"]
     session["winO"] = ["O","O","O"]
 
-    #check for stalemate
-    empty = 0
-
-    for i in session["board"]:
-        for j in i:
-            if j == None:
-                empty = empty + 1
     
-    if empty == 0:
-        return render_template("winner.html", winner = "NOBODY")
 
     #check for horizontal wins
     for item in session["board"]:
@@ -106,6 +97,17 @@ def play(row,col):
             return render_template("winner.html", winner = "X")
         if item == session["winO"]:
             return render_template("winner.html", winner = "O")
+
+    #check for stalemate
+    empty = 0
+
+    for i in session["board"]:
+        for j in i:
+            if j == None:
+                empty = empty + 1
+    
+    if empty == 0:
+        return render_template("winner.html", winner = "NOBODY")
            
 
 
