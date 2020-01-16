@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tic Tac Toe</title>
+
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+            
+            td {
+                border: 2px solid blue;
+                width: 150px;
+                height: 150px;
+                font-size: 30px;
+                text-align: center;
+                
+            }
+
+            td > a {
+                font-size: 18px;
+            }
+
+        </style>
+        
+    </head>
+    <body>
+        <table>
+            
+            {% for i in range(3) %}
+            <tr>
+                {% for j in range(3) %}
+                <td>
+                    {% if board[i][j] %}
+                        {{ board[i][j] }}
+                    {% else %}
+                        <a href='{{ url_for('play', row=i, col=j) }}'>Play {{ turn }} here</a>
+                    {% endif %}
+
+                </td>
+                {% endfor %}
+                
+            </tr>
+            {% endfor %}
+        </table>
+
+        <a href='{{ url_for('reset') }}'>RESET GAME</a>
+    </body>
+</html>
